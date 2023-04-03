@@ -3,13 +3,11 @@ import {Link, NavLink} from "react-router-dom";
 
 const Header = ({changeThem}) => {
 
-    const [mode, setMode] = useState(JSON.parse(localStorage.getItem('mode') || false ))
-
+    const [mode, setMode] = useState(JSON.parse(localStorage.getItem('mode') || false))
     const fn = () => {
         changeThem(mode)
         setMode(!mode)
     }
-
     return (
         <>
             <header id="header">

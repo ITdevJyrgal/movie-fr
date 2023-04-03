@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.scss';
+import './Sidebar.scss';
 import {Routes, Route} from "react-router-dom"
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
@@ -9,15 +10,17 @@ import TopRated from "./page/topRated/topRated";
 import UpComing from "./page/upComing/upComing";
 import DetailtPage from "./page/detailPage/detailtPage";
 import {useState} from "react";
+import Sidebar from "./components/header/Sidebar";
+
 
 function App() {
 
     const [mode, setMode] = useState(JSON.parse(localStorage.getItem('mode') || false ))
-
     const changeThem = (mode) => {
         setMode(!mode)
         localStorage.setItem('mode', JSON.stringify(!mode))
     }
+
     return (
         <div style={{
             background: mode ? "#000" : "",

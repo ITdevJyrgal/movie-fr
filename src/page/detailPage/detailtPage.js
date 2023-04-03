@@ -3,13 +3,13 @@ import {useParams} from "react-router-dom";
 import axios from "axios";
 import {APIKEY} from "../../api/apiKey";
 import Slider from "react-slick";
+import Video from "../../components/video/video";
 
 const DetailtPage = () => {
 
         const {id} = useParams()
         const [details, setDetails] = useState({})
         const [cast, setCast] = useState([])
-
         const getDetails = async () => {
             try {
                 const link = await axios(`https://api.themoviedb.org/3/movie/${id}?api_key=${APIKEY}&language=en-US`)
@@ -30,21 +30,48 @@ const DetailtPage = () => {
             }
         }
 
-
         useEffect(() => {
             getDetails()
             getCast()
         }, [])
-
         console.log(details)
-
         const settings = {
-            dots: true,
+            dots: false,
+            arrows: false,
             infinite: false,
-            speed: 500,
-            slidesToShow: 4,
-            slidesToScroll: 4,
+            slidesToShow: 5,
+            slidesToScroll: 1,
             initialSlide: 0,
+            autoplay: true,
+            speed: 500,
+            autoplaySpeed: 500,
+            cssEase: "linear",
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                        infinite: true,
+                        dots: true
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                        initialSlide: 2
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
         }
         return (
             <>
@@ -68,28 +95,39 @@ const DetailtPage = () => {
                 <div>
                     <div className="container">
                         <div>
-
                             <Slider {...settings}>
-                                <div>
-                                    {
-                                        cast.map(el => {
-                                            return (
-                                                <div>
-                                                    {
-                                                        el.profile_path ?  <img
-                                                            src={`https://www.themoviedb.org/t/p/w138_and_h175_face/${el.profile_path}`}
-                                                            alt=""/> : <img src="https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png" alt=""/>
-                                                    }
-                                                    <h2>{el.character}</h2>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                </div>
+                                {
+                                    cast.map(el => {
+                                        return (
+                                            <div>
+                                                {
+                                                    el.profile_path ? <img
+                                                        src={`https://www.themoviedb.org/t/p/w138_and_h175_face/${el.profile_path}`}
+                                                        alt=""
+                                                        style={{
+                                                            marginBottom: "20px"
+                                                        }
+                                                        }/> : <img
+                                                        src="https://cdn-icons-png.flaticon.com/512/1177/1177568.png"
+                                                        width={160}
+                                                        style={{
+                                                            marginBottom: "20px"
+                                                        }
+                                                        }
+                                                        alt=""/>
+                                                }
+                                                <h5>{el.character}</h5>
+                                            </div>
+                                        )
+                                    })
+                                }
                             </Slider>
                         </div>
-
                     </div>
+                </div>
+
+                <div>
+                   <Video id={id}/>
                 </div>
             </>
         );
