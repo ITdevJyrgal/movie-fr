@@ -1,5 +1,5 @@
 ﻿import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import axios from "axios";
 import {APIKEY} from "../../api/apiKey";
 import Slider from "react-slick";
@@ -40,11 +40,11 @@ const DetailtPage = () => {
             arrows: false,
             infinite: false,
             slidesToShow: 5,
-            slidesToScroll: 1,
-            initialSlide: 0,
-            autoplay: true,
-            speed: 500,
-            autoplaySpeed: 500,
+            slidesToScroll: 3,
+            initialSlide: 3,
+            autoplay: false,
+            speed: 2000,
+            autoplaySpeed: 2000,
             cssEase: "linear",
             responsive: [
                 {
@@ -83,10 +83,11 @@ const DetailtPage = () => {
                     <div className="container">
                         <div className="d-flex justify-content-around ">
                             <img src={`https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${details.poster_path}`} alt=""/>
-                            <div className="w-50 block">
+                            <div className="w-50 block py-4">
                                 <h3 className="text-white">{details.title}</h3>
                                 <h4 className="text-white-50">{Math.floor(details.runtime / 60)}h {details.runtime % 60}min</h4>
                                 <p className="vote--average">{Math.floor(details.vote_average)}</p>
+                                <p className="text-white">{details.release_date}</p>
                                 <p className="text-white">{details.overview}</p>
                             </div>
                         </div>
@@ -100,23 +101,25 @@ const DetailtPage = () => {
                                     cast.map(el => {
                                         return (
                                             <div>
-                                                {
-                                                    el.profile_path ? <img
-                                                        src={`https://www.themoviedb.org/t/p/w138_and_h175_face/${el.profile_path}`}
-                                                        alt=""
-                                                        style={{
-                                                            marginBottom: "20px"
-                                                        }
-                                                        }/> : <img
-                                                        src="https://cdn-icons-png.flaticon.com/512/1177/1177568.png"
-                                                        width={160}
-                                                        style={{
-                                                            marginBottom: "20px"
-                                                        }
-                                                        }
-                                                        alt=""/>
-                                                }
-                                                <h5>{el.character}</h5>
+                                                <Link to={`/popular/popular-info/person-details/${el.id}`}>
+                                                    {
+                                                        el.profile_path ? <img
+                                                            src={`https://www.themoviedb.org/t/p/w138_and_h175_face/${el.profile_path}`}
+                                                            alt=""
+                                                            style={{
+                                                                marginBottom: "20px"
+                                                            }
+                                                            }/> : <img
+                                                            src="https://cdn-icons-png.flaticon.com/512/1177/1177568.png"
+                                                            width={160}
+                                                            style={{
+                                                                marginBottom: "20px"
+                                                            }
+                                                            }
+                                                            alt=""/>
+                                                    }
+                                                    <h5>{el.character}</h5>
+                                                </Link>
                                             </div>
                                         )
                                     })
@@ -127,7 +130,7 @@ const DetailtPage = () => {
                 </div>
 
                 <div>
-                   <Video id={id}/>
+                    <Video id={id}/>
                 </div>
             </>
         );

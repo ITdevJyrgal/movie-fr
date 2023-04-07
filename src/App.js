@@ -11,6 +11,8 @@ import UpComing from "./page/upComing/upComing";
 import DetailtPage from "./page/detailPage/detailtPage";
 import {useState} from "react";
 import Sidebar from "./components/header/Sidebar";
+import PersonDetails from "./components/personDetails/personDetails";
+import Search from "./components/header/search";
 
 
 function App() {
@@ -31,7 +33,9 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/popular" element={<Popular/>}/>
+                <Route path="/search-movie/:movieName" element={<Search/>} />
                 <Route path="/popular/popular-info/:id" element={<DetailtPage/>}/>
+                <Route path="/popular/popular-info/person-details/:personId" element={<PersonDetails/>}/>
                 <Route path="/top-rated" element={<TopRated/>}/>
                 <Route path="/up-coming" element={<UpComing/>}/>
             </Routes>

@@ -1,7 +1,21 @@
 import React, {useState} from 'react';
-import {Link, NavLink} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 
 const Header = ({changeThem}) => {
+
+
+    const [search, setSearch] = useState('')
+    const navigate = useNavigate();
+    console.log(search)
+
+
+    const handleChange = (e) => {
+        setSearch(e.target.value)
+    }
+
+    const handleSearch = () => {
+        navigate(`/search-movie/:${search}`)
+    }
 
     const [mode, setMode] = useState(JSON.parse(localStorage.getItem('mode') || false))
     const fn = () => {
@@ -30,8 +44,10 @@ const Header = ({changeThem}) => {
                         </nav>
                         <button onClick={() => fn(mode)}>{mode ? "night" : "dark"}</button>
                         <div className='header--search'>
-                            <input type="text"/>
-                            <button>search</button>
+                            <input
+                                onChange={handleChange}
+                                type="search" name=''/>
+                            <button onClick={handleSearch}>search</button>
                         </div>
                     </div>
                 </div>
